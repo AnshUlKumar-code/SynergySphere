@@ -101,12 +101,12 @@ export default function DashboardPage() {
                 <EnhancedCardHeader>
                   <div className="flex items-center justify-between pb-2">
                     <EnhancedCardTitle className="text-sm font-medium">Total Projects</EnhancedCardTitle>
-                    <FolderKanban className="h-4 w-4 text-primary" />
+                    <FolderKanban className="h-5 w-5 text-primary" />
                   </div>
                 </EnhancedCardHeader>
                 <EnhancedCardContent>
                   <div className="text-2xl font-bold text-primary">{totalProjects}</div>
-                  <p className="text-xs text-muted-foreground">Active projects</p>
+                  <p className="text-xs text-muted-foreground mt-1">Active projects</p>
                 </EnhancedCardContent>
               </EnhancedCard>
             </StaggerItem>
@@ -116,12 +116,12 @@ export default function DashboardPage() {
                 <EnhancedCardHeader>
                   <div className="flex items-center justify-between pb-2">
                     <EnhancedCardTitle className="text-sm font-medium">Total Tasks</EnhancedCardTitle>
-                    <CheckCircle className="h-4 w-4 text-green-500" />
+                    <CheckCircle className="h-5 w-5 text-green-500" />
                   </div>
                 </EnhancedCardHeader>
                 <EnhancedCardContent>
                   <div className="text-2xl font-bold text-green-600 dark:text-green-400">{totalTasks}</div>
-                  <p className="text-xs text-muted-foreground">{completedTasks} completed</p>
+                  <p className="text-xs text-muted-foreground mt-1">{completedTasks} completed</p>
                 </EnhancedCardContent>
               </EnhancedCard>
             </StaggerItem>
@@ -131,12 +131,12 @@ export default function DashboardPage() {
                 <EnhancedCardHeader>
                   <div className="flex items-center justify-between pb-2">
                     <EnhancedCardTitle className="text-sm font-medium">In Progress</EnhancedCardTitle>
-                    <Clock className="h-4 w-4 text-orange-500" />
+                    <Clock className="h-5 w-5 text-orange-500" />
                   </div>
                 </EnhancedCardHeader>
                 <EnhancedCardContent>
                   <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{inProgressTasks}</div>
-                  <p className="text-xs text-muted-foreground">Tasks in progress</p>
+                  <p className="text-xs text-muted-foreground mt-1">Tasks in progress</p>
                 </EnhancedCardContent>
               </EnhancedCard>
             </StaggerItem>
@@ -146,7 +146,7 @@ export default function DashboardPage() {
                 <EnhancedCardHeader>
                   <div className="flex items-center justify-between pb-2">
                     <EnhancedCardTitle className="text-sm font-medium">Completion Rate</EnhancedCardTitle>
-                    <TrendingUp className="h-4 w-4 text-secondary" />
+                    <TrendingUp className="h-5 w-5 text-secondary" />
                   </div>
                 </EnhancedCardHeader>
                 <EnhancedCardContent>
@@ -309,14 +309,4 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm">Overall progress</span>
-                    <Badge variant="secondary">{completionRate}%</Badge>
-                  </div>
-                </EnhancedCardContent>
-              </EnhancedCard>
-            </FadeInUp>
-          </div>
-        </div>
-      </AnimatedPage>
-    </div>
-  )
-}
+                    <Badge
