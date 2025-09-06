@@ -23,8 +23,12 @@ Your project is live at:
 <img width="1907" height="860" alt="Screenshot 2025-09-06 162158" src="https://github.com/user-attachments/assets/a991c6b3-75cb-4dc1-b347-c93046d1df9b" />
 <img width="1917" height="857" alt="Screenshot 2025-09-06 162145" src="https://github.com/user-attachments/assets/49f894ac-9859-4552-bf50-671547c84980" />
 <img width="1911" height="853" alt="Screenshot 2025-09-06 162105" src="https://github.com/user-attachments/assets/8bd9aadd-3115-4bf5-b38e-9314aa6bb497" />
-<img width="1848" height="946" alt="Screenshot 2025-09-06 135125" src="https://github.com/user-attachments/assets/38abd919-08dd-42aa-bcbb-1e3d6b0a2e3f" />
 
+Overview:-
+
+SynergySphere is an intelligent project management and collaboration platform designed for project owners. It integrates an AI-powered chatbot to help leaders manage tasks, track project status, and access team information effortlessly. The platform also features a Zoom meeting bot that automatically summarizes key discussion points and updates project progress.
+
+With smart task management, proactive insights, and automated summaries, SynergySphere reduces communication gaps, prevents workload imbalance, and keeps projects on track — helping teams work smarter, not harder.
 
 
 
