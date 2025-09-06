@@ -56,7 +56,6 @@ export default function DashboardPage() {
     return null
   }
 
-  // Calculate dashboard stats with fallback
   const totalProjects = dashboardStats?.totalProjects || projects.length
   const totalTasks = dashboardStats?.totalTasks || projects.reduce((acc, project) => acc + project.tasks.length, 0)
   const completedTasks =
@@ -68,8 +67,6 @@ export default function DashboardPage() {
     0,
   )
   const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0
-
-  // Get recent projects (last 3)
   const recentProjects = projects.slice(-3).reverse()
 
   return (
@@ -79,7 +76,7 @@ export default function DashboardPage() {
       <AnimatedPage className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <FadeInUp>
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div>
               <h1 className="font-space-grotesk text-3xl font-bold text-foreground">Welcome back, {user.name}</h1>
               <p className="text-muted-foreground mt-1">Here's what's happening with your projects today.</p>
@@ -98,11 +95,11 @@ export default function DashboardPage() {
 
         {/* Stats Cards */}
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StaggerItem>
               <EnhancedCard glassmorphism className="border-primary/20">
                 <EnhancedCardHeader>
-                  <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <div className="flex items-center justify-between pb-2">
                     <EnhancedCardTitle className="text-sm font-medium">Total Projects</EnhancedCardTitle>
                     <FolderKanban className="h-4 w-4 text-primary" />
                   </div>
@@ -117,7 +114,7 @@ export default function DashboardPage() {
             <StaggerItem>
               <EnhancedCard glassmorphism className="border-green-500/20">
                 <EnhancedCardHeader>
-                  <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <div className="flex items-center justify-between pb-2">
                     <EnhancedCardTitle className="text-sm font-medium">Total Tasks</EnhancedCardTitle>
                     <CheckCircle className="h-4 w-4 text-green-500" />
                   </div>
@@ -132,7 +129,7 @@ export default function DashboardPage() {
             <StaggerItem>
               <EnhancedCard glassmorphism className="border-orange-500/20">
                 <EnhancedCardHeader>
-                  <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <div className="flex items-center justify-between pb-2">
                     <EnhancedCardTitle className="text-sm font-medium">In Progress</EnhancedCardTitle>
                     <Clock className="h-4 w-4 text-orange-500" />
                   </div>
@@ -147,20 +144,21 @@ export default function DashboardPage() {
             <StaggerItem>
               <EnhancedCard glassmorphism className="border-secondary/20">
                 <EnhancedCardHeader>
-                  <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <div className="flex items-center justify-between pb-2">
                     <EnhancedCardTitle className="text-sm font-medium">Completion Rate</EnhancedCardTitle>
                     <TrendingUp className="h-4 w-4 text-secondary" />
                   </div>
                 </EnhancedCardHeader>
                 <EnhancedCardContent>
                   <div className="text-2xl font-bold text-secondary">{completionRate}%</div>
-                  <Progress value={completionRate} className="mt-2" />
+                  <Progress value={completionRate} className="w-full mt-2" />
                 </EnhancedCardContent>
               </EnhancedCard>
             </StaggerItem>
           </div>
         </StaggerContainer>
 
+        {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Recent Projects */}
           <FadeInUp delay={0.2} className="lg:col-span-2">
@@ -189,13 +187,13 @@ export default function DashboardPage() {
                       return (
                         <FadeInUp key={project.id} delay={0.1 * index}>
                           <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-all duration-300 hover:shadow-md">
-                            <div className="flex-1">
+                            <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-3">
                                 <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
                                   <FolderKanban className="h-5 w-5 text-white" />
                                 </div>
-                                <div>
-                                  <h3 className="font-medium">{project.name}</h3>
+                                <div className="min-w-0">
+                                  <h3 className="font-medium truncate">{project.name}</h3>
                                   <p className="text-sm text-muted-foreground line-clamp-1">{project.description}</p>
                                 </div>
                               </div>
@@ -234,14 +232,12 @@ export default function DashboardPage() {
             </EnhancedCard>
           </FadeInUp>
 
-          {/* Right Sidebar */}
+          {/* Sidebar */}
           <div className="space-y-6">
-            {/* Smart Task Suggestions */}
             <FadeInUp delay={0.3}>
               <SmartTaskSuggestions projects={projects} />
             </FadeInUp>
 
-            {/* Quick Actions */}
             <FadeInUp delay={0.4}>
               <EnhancedCard glassmorphism>
                 <EnhancedCardHeader>
@@ -276,7 +272,6 @@ export default function DashboardPage() {
               </EnhancedCard>
             </FadeInUp>
 
-            {/* Alerts */}
             {overdueTasks > 0 && (
               <FadeInUp delay={0.5}>
                 <EnhancedCard className="border-destructive/50 bg-destructive/5">
@@ -298,7 +293,6 @@ export default function DashboardPage() {
               </FadeInUp>
             )}
 
-            {/* Activity Summary */}
             <FadeInUp delay={0.6}>
               <EnhancedCard neumorphism>
                 <EnhancedCardHeader>
