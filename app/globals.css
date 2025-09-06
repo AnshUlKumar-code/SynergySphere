@@ -123,3 +123,76 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Added glassmorphism and neumorphism utility classes */
+@layer utilities {
+  .glassmorphism {
+    @apply bg-background/80 backdrop-blur-md border-white/20 shadow-xl;
+  }
+
+  .glassmorphism-dark {
+    @apply dark:bg-background/60 dark:backdrop-blur-md dark:border-white/10;
+  }
+
+  .neumorphism {
+    @apply bg-gradient-to-br from-background to-muted/50;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.1);
+  }
+
+  .neumorphism-dark {
+    @apply dark:shadow-[8px_8px_16px_rgba(0,0,0,0.3),-8px_-8px_16px_rgba(255,255,255,0.05)];
+  }
+
+  .neumorphism-hover {
+    @apply hover:shadow-[12px_12px_24px_rgba(0,0,0,0.15),-12px_-12px_24px_rgba(255,255,255,0.15)];
+  }
+
+  .neumorphism-hover-dark {
+    @apply dark:hover:shadow-[12px_12px_24px_rgba(0,0,0,0.4),-12px_-12px_24px_rgba(255,255,255,0.08)];
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Added smooth scrolling and improved focus styles */
+html {
+  scroll-behavior: smooth;
+}
+
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-ring;
+}
+
+/* Added custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted/30;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}

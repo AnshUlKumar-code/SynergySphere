@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/auth-context"
 import { ProjectProvider } from "@/contexts/project-context"
+import { Toaster } from "@/components/toaster"
 import { Suspense } from "react"
 import "./globals.css"
 
@@ -41,7 +42,10 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             <AuthProvider>
-              <ProjectProvider>{children}</ProjectProvider>
+              <ProjectProvider>
+                {children}
+                <Toaster />
+              </ProjectProvider>
             </AuthProvider>
           </ThemeProvider>
         </Suspense>

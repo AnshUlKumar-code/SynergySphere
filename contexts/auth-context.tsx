@@ -2,19 +2,14 @@
 
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
-
-interface User {
-  id: string
-  name: string
-  email: string
-  avatar?: string
-}
+import { loginUser, registerUser, getCurrentUser, logoutUser, updateUser, type User } from "@/lib/mock-api"
 
 interface AuthContextType {
   user: User | null
   login: (email: string, password: string) => Promise<boolean>
   register: (name: string, email: string, password: string) => Promise<boolean>
-  logout: () => void
+  logout: () => Promise<void>
+  updateProfile: (updates: Partial<User>) => Promise<boolean>
   isLoading: boolean
 }
 
@@ -25,32 +20,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Check for stored user on mount
-    const storedUser = localStorage.getItem("projectflow-user")
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
+    const loadCurrentUser = async () => {
+      try {
+        const currentUser = await getCurrentUser()
+        setUser(currentUser)
+      } catch (error) {
+        console.error("Error loading current user:", error)
+      } finally {
+        setIsLoading(false)
+      }
     }
-    setIsLoading(false)
+
+    loadCurrentUser()
   }, [])
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true)
 
-    // Mock authentication - in real app, this would be an API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    if (email && password) {
-      const mockUser: User = {
-        id: "1",
-        name: email.split("@")[0],
-        email,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
+    try {
+      const loggedInUser = await loginUser(email, password)
+      if (loggedInUser) {
+        setUser(loggedInUser)
+        setIsLoading(false)
+        return true
       }
-
-      setUser(mockUser)
-      localStorage.setItem("projectflow-user", JSON.stringify(mockUser))
-      setIsLoading(false)
-      return true
+    } catch (error) {
+      console.error("Login error:", error)
     }
 
     setIsLoading(false)
@@ -60,33 +55,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = async (name: string, email: string, password: string): Promise<boolean> => {
     setIsLoading(true)
 
-    // Mock registration
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    if (name && email && password) {
-      const mockUser: User = {
-        id: Date.now().toString(),
-        name,
-        email,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
+    try {
+      const newUser = await registerUser(name, email, password)
+      if (newUser) {
+        setUser(newUser)
+        setIsLoading(false)
+        return true
       }
-
-      setUser(mockUser)
-      localStorage.setItem("projectflow-user", JSON.stringify(mockUser))
-      setIsLoading(false)
-      return true
+    } catch (error) {
+      console.error("Registration error:", error)
     }
 
     setIsLoading(false)
     return false
   }
 
-  const logout = () => {
-    setUser(null)
-    localStorage.removeItem("projectflow-user")
+  const updateProfile = async (updates: Partial<User>): Promise<boolean> => {
+    if (!user) return false
+
+    try {
+      const updatedUser = await updateUser(user.id, updates)
+      if (updatedUser) {
+        setUser(updatedUser)
+        return true
+      }
+    } catch (error) {
+      console.error("Profile update error:", error)
+    }
+
+    return false
   }
 
-  return <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>{children}</AuthContext.Provider>
+  const logout = async () => {
+    await logoutUser()
+    setUser(null)
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, login, register, logout, updateProfile, isLoading }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export function useAuth() {
