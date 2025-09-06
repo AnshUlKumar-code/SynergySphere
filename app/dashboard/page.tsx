@@ -309,4 +309,14 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm">Overall progress</span>
-                    <Badge
+                    <Badge variant="secondary">{completionRate}%</Badge>
+                  </div>
+                </EnhancedCardContent>
+              </EnhancedCard>
+            </FadeInUp>
+          </div>
+        </div>
+      </AnimatedPage>
+    </div>
+  )
+}
